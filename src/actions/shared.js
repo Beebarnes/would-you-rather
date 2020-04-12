@@ -1,4 +1,4 @@
-import { getInitialData } from '../utils/api'
+import { _getQuestions } from '../utils/_DATA'
 import { receiveUsers } from '../actions/users'
 import { receiveQuestions } from '../actions/questions'
 import { setAuthedUser } from '../actions/authuser'
@@ -9,7 +9,7 @@ const AUTHED_ID = 'tylermcginnis'
 export function handleInitialData () {
   return (dispatch) => {
     dispatch(showLoading())
-    return getInitialData()
+    return _getQuestions()
       .then( ({users, questions}) => {
         dispatch(receiveUsers(users))
         dispatch(receiveQuestions(questions))
