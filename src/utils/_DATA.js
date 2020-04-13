@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    // avatarURL: ,
+    avatarURL: 'https://via.placeholder.com/150',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    // avatarURL: ,
+    avatarURL: 'https://via.placeholder.com/150',
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    // avatarURL: ,
+    avatarURL: 'https://via.placeholder.com/150',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -131,11 +131,11 @@ export function _getQuestions () {
   })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatQuestion ( optionOneText, optionTwoText, author ) {
   return {
     id: generateUID(),
     timestamp: Date.now(),
-    author,
+    author: author,
     optionOne: {
       votes: [],
       text: optionOneText,
@@ -147,16 +147,20 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function _saveQuestion (question) {
+export function _saveQuestion (optionOneText, optionTwoText, author) {
   return new Promise((res, rej) => {
-    const authedUser = question.author;
-    const formattedQuestion = formatQuestion(question);
+    const authedUser = author;
+    const formattedQuestion = formatQuestion(optionOneText, optionTwoText, author);
 
     setTimeout(() => {
+      
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
       }
+
+      console.log('questions array ', questions)
+      console.log('formatted question ', formattedQuestion)
       
       users = {
         ...users,
@@ -167,11 +171,11 @@ export function _saveQuestion (question) {
       }
 
       res(formattedQuestion)
-    }, 1000)
+    }, 2000)
   })
 }
 
-export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer (qid, answer, authedUser) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       users = {

@@ -1,8 +1,8 @@
-import { _saveQuestion } from '../utils/_DATA'
+import { saveQuestion, saveQuestionAnswer } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
-export const TOGGLE_QUESTION = 'TOGGLE_QUESTION'
+export const DECIDE_QUESTION = 'DECIDE_QUESTION'
 export const ADD_QUESTION = 'ADD_QUESTION'
 
 function addQuestion (question) {
@@ -12,17 +12,16 @@ function addQuestion (question) {
   }
 }
 
-export function handleAddQuestion (text, replyingTo) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
+export function handleAddQuestion (optionOneText, optionTwoText, author) {
+  return (dispatch) => {
 
     dispatch(showLoading())
 
-    return _saveQuestion({
-      text,
-      author: authedUser,
-      replyingTo
-    })
+    return saveQuestion(
+      optionOneText,
+      optionTwoText,
+      author
+    )
       .then( (question) => dispatch(addQuestion(question)))
       .then( () => dispatch(hideLoading()))
   }
@@ -35,24 +34,24 @@ export function receiveQuestions (questions) {
   }
 }
 
-function toggleQuestion({id, authedUser, hasLiked}) {
+function decideQuestion(qid, answer, authedUser) {
   return {
-    type: TOGGLE_QUESTION,
-    id,
+    type: DECIDE_QUESTION,
+    qid,
+    answer,
     authedUser,
-    hasLiked
   }
 }
 
-// export function handleToggleQuestion (info) {
-//   return (dispatch) => {
-//     dispatch(toggleQuestion(info))
+export function handleDecideQuestion (qid, answer, authedUser) {
+  return (dispatch) => {
+    dispatch(decideQuestion(qid, answer, authedUser))
 
-//     return saveLikeToggle(info)
-//       .catch((e) => {
-//         console.warn('Error in handleToggleQuestion: ', e)
-//         dispatch(toggleQuestion(info))
-//         alert('There was an error liking the question. Try again')
-//       })
-//   }
-// }
+    return saveQuestionAnswer(qid, answer, authedUser)
+      .catch((e) => {
+        console.warn('Error in handleToggleQuestion: ', e)
+        dispatch(decideQuestion(qid, answer, authedUser))
+        alert('There was an error liking the question. Try again')
+      })
+  }
+}

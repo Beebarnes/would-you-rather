@@ -11,8 +11,18 @@ export default function Nav () {
           </NavLink>
         </li>
         <li>
+          <NavLink to='/all' activeClassName='active'>
+            All Questions
+          </NavLink>
+        </li>
+        <li>
           <NavLink to='/new' activeClassName='active'>
-            New Tweet
+            New Question
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/leaderboard' activeClassName='active'>
+            Top Scores
           </NavLink>
         </li>
       </ul>

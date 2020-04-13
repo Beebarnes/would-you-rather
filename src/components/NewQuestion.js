@@ -6,37 +6,39 @@ import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
   state = {
-    text: '',
+    option1Text: '',
+    option2Text: '',
+    author: this.props.authedUser,
     toHome: false
   }
-  handleChange = (e) => {
-    const text = e.target.value
 
-    this.setState( () => ({
-      text
-    }))
+  handleChange = (e) => {
+    
+    const text = e.target.value
+    const name = e.target.name
+
+    this.setState({
+      ...this.state,
+      [name]: text
+    })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { text } = this.state
-    const { dispatch, id } = this.props
+    const { optionOneText, optionTwoText, author } = this.state
+    const { dispatch } = this.props
 
-    dispatch(handleAddQuestion(text, id))
+    dispatch(handleAddQuestion(optionOneText, optionTwoText, author))
     
     this.setState( () => ({
-      text: '',
-      toHome: id ? false : true
+      optionOneText: '',
+      optionTwoText: '',
     }))
   }
 
   render() {
-    const { text, toHome } = this.state
-    const questionLeft = 280 - text.length
-
-    if (toHome === true) {
-      return <Redirect to='/' />
-    }
+    const { optionOneText, optionTwoText } = this.state
     
     return (
       
@@ -44,21 +46,26 @@ class NewQuestion extends Component {
         <h3 className='center'>Compose New Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <textarea 
-            placeholder="What's happening"
-            value={text}
+            placeholder="Option 1"
+            value={optionOneText}
             onChange={this.handleChange}
             className='textarea'
             maxLength={280}
+            name='optionOneText'
           />
-          {questionLeft <= 100 && (
-            <div className='question-length'>
-              {questionLeft}
-            </div>
-          )}
+          <textarea 
+            placeholder="Option 2"
+            value={optionTwoText}
+            onChange={this.handleChange}
+            className='textarea'
+            maxLength={280}
+            name='optionTwoText'
+          />
           <button 
             className='btn'
             type='submit'
-            disabled={text === '' }>
+            disabled={optionOneText === '' || optionTwoText === '' }>
+            >
           Submit
           </button>
         </form>
@@ -67,4 +74,8 @@ class NewQuestion extends Component {
   }
 }
 
-export default connect()(NewQuestion);
+function mapStateToProps({ authedUser }) {
+  return {authedUser}
+}
+
+export default connect(mapStateToProps)(NewQuestion);

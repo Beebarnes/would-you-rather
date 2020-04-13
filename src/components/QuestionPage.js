@@ -1,36 +1,59 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
-import NewQuestion from './NewQuestion'
 
 class QuestionPage extends Component {
+  state = {
+    answerPreference: this.UNANSWERED
+  }
+
+  UNANSWERED = 'UNANSWERED'
+  ANSWERED = 'ANSWERED'
+
+  setUnansweredPreference = () => {
+    this.setState({
+      answerPreference: this.UNANSWERED
+    })
+  }
+
+  setAnsweredPreference = () => {
+    this.setState({
+      answerPreference: this.ANSWERED
+    })
+  }
+
   render() {
-    const { id, replies } = this.props
+    const { questions, users, authedUser } = this.props
+    
+    let answeredQuestions = Object.keys(users[authedUser].answers)
+    let unansweredQuestions = Object.keys(questions).filter((question) => !answeredQuestions.includes(question))
+
     return (
       <div>
-        <Question id={id} />
-        <NewQuestion id={id} />
-        {replies.length !== 0 && <h3 className='center'>Replies</h3>}
-        <ul>
-          {replies.map((replyId) => (
-            <li key={replyId}>
-              <Question id={replyId} />
+        <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
+        <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
+        {this.state.answerPreference === this.ANSWERED 
+          ? answeredQuestions.map( (id) => (
+            <li key={id}>
+              <Question id={id}/>
             </li>
-          ))}
-        </ul>
+            ))
+          : unansweredQuestions.map( (id) => (
+            <li key={id}>
+              <Question id={id}/>
+            </li>
+            ))
+        }
       </div>
     )
   }
 }
 
-function mapStateToProps ({ authedUser, questions, users}, props) {
-  const { id } = props.match.params
-
+function mapStateToProps ({ questions, users, authedUser }) {
   return {
-    id,
-    replies: !questions[id]
-      ? []
-      : questions[id].replies.sort( (a,b) => questions[b].timestamp - questions[a].timestamp)
+    questions,
+    users,
+    authedUser
   }
 }
 
