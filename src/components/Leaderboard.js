@@ -11,18 +11,29 @@ class Leaderboard extends Component {
 
     console.log( users )
 
+    let userArray = Object.values(users)
+    userArray.map( (user) => {
+      console.log(user.name)
+      console.log(user.answers)
+      console.log(user.questions)
+    })
+
     return (
       <div>
         <ul>
           {Object.values(users).map( (user) => (
             <li key={user.id} id={user.id}>
               <div>{user.name}</div>
-              <div>{user.answers.length > 0
-              ? `${user.answers.length} questions answered`
+              <div>{Object.keys(user.answers).length > 0
+              ? `${Object.keys(user.answers).length} questions answered`
               : 'No questions answered'
               } 
               </div>
               <div>{user.questions.length} questions asked</div>
+              <div>{Object.keys(user.answers).length + user.questions.length > 0
+              ? `${Object.keys(user.answers).length + user.questions.length} total score` 
+              : 'No Score Achieved'
+              }</div>
             </li>
           ))}
         </ul>
