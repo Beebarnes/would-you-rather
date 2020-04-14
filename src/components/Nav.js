@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { setAuthedUser } from '../actions/authuser'
 import { NavLink } from 'react-router-dom'
 
 class Nav extends Component{
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const user = null;
+    const { dispatch } = this.props
+
+    dispatch(setAuthedUser(user))
     
+  }
 
   
   render() {
@@ -34,16 +43,18 @@ class Nav extends Component{
             </NavLink>
           </li>
         </ul>
-        <ul>
+        {!user
+        ? null
+        : <ul>
           <li>
             {user.name}
           </li>
           <li>
-            <NavLink to='/login' exact>
-              Login
-            </NavLink>
+            <button onClick={this.handleSubmit}>Logout</button>
           </li>
         </ul>
+        }
+        
       </nav>
     )
   }

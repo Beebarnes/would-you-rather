@@ -37,7 +37,7 @@ class QuestionPage extends Component {
         <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
         <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
         {this.state.answerPreference === this.ANSWERED 
-          ? answeredQuestions.lenght === 0
+          ? answeredQuestions.length === 0
             ? <p>You've answered no questions</p>
             : answeredQuestions.map( (id) => (
             <li key={id}>

@@ -20,7 +20,7 @@ class App extends Component {
           <LoadingBar/>
           <div className='container'>
             {this.props.loading === true
-              ? null
+              ? <Route path='/' component={Login} />
               : <div>
                   <Nav />
                   <div>
@@ -33,7 +33,6 @@ class App extends Component {
                 }
           </div>
         </Fragment>
-        
       </Router>
       
     )
