@@ -22,6 +22,10 @@ class QuestionPage extends Component {
     })
   }
 
+  showAnswer = () => {
+
+  }
+
   render() {
     const { questions, users, authedUser } = this.props
     
@@ -33,14 +37,18 @@ class QuestionPage extends Component {
         <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
         <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
         {this.state.answerPreference === this.ANSWERED 
-          ? answeredQuestions.map( (id) => (
+          ? answeredQuestions.lenght === 0
+            ? <p>You've answered no questions</p>
+            : answeredQuestions.map( (id) => (
             <li key={id}>
-              <Question id={id}/>
+              <Question id={id} />
             </li>
             ))
-          : unansweredQuestions.map( (id) => (
+          : unansweredQuestions.length === 0
+            ? <p>You've answered all the questions.</p>
+            : unansweredQuestions.map( (id) => (
             <li key={id}>
-              <Question id={id}/>
+              <Question id={id} showAnswer={this.showAnswer}/>
             </li>
             ))
         }

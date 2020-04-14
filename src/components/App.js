@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Dashboard from './Dashboard.js'
 import NewQuestion from './NewQuestion'
+import Login from './Login'
 import LoadingBar from 'react-redux-loading'
 import QuestionPage from './QuestionPage'
 import Nav from './Nav'
@@ -18,14 +19,18 @@ class App extends Component {
         <Fragment>
           <LoadingBar/>
           <div className='container'>
-            <Nav/>
             {this.props.loading === true
               ? null
               : <div>
-                  <Route path='/' exact component={Dashboard} />
-                  <Route path='/all' component={QuestionPage} />
-                  <Route path='/new' component={NewQuestion} />
-              </div> }
+                  <Nav />
+                  <div>
+                      <Route path='/' exact component={Dashboard} />
+                      <Route path='/all' component={QuestionPage} />
+                      <Route path='/new' component={NewQuestion} />
+                      <Route path='/login' component={Login} />
+                  </div> 
+                </div>
+                }
           </div>
         </Fragment>
         

@@ -8,7 +8,6 @@ export default function users (state = {}, action) {
         ...action.users
       }
     case UPDATE_USERS : 
-    console.log('Action ', state[action.authedUser].answers)
       return {
         ...state,
         [action.authedUser] : {

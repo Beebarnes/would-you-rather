@@ -6,7 +6,7 @@ import { Link, withRouter } from 'react-router-dom'
 
 class Question extends Component {
   state = {
-    answer: ''
+    answer: '',
   }
   
   decideQuestion = (e) => {
@@ -24,10 +24,16 @@ class Question extends Component {
       this.state.answer,
       authedUser
     ))
+    this.setState({
+      ...this.state,
+    })
+    if (question){
+      this.props.showAnswer(question.id);
+    }
+    
   }
 
   setAnswer = (e) => {
-    console.log(e.target.id)
     this.setState({
       ...this.state,
       answer : e.target.id
@@ -38,42 +44,40 @@ class Question extends Component {
 
     const { question, users } = this.props
     
-    if (question === null) {
-      return <p>This question does not exist.</p>
+    if (question === null || question === undefined) {
+      return <p>Out of fresh questions. Go make one up.</p>
     }
     
-    const {
-      author, optionOne, optionTwo
-    } = question
+    const { author, optionOne, optionTwo } = question
 
     return (
       <div>
-        <header>
-          Would you rather...
-        </header>
-        <form onSubmit={this.decideQuestion}>
-          <div>
-            <div onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</div> 
-            <div onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</div>
-          </div>
-          <button type='submit' >Submit</button>
-        </form>
-        
-        <footer>
-          From the mind of {users[author].name}
-        </footer>
+          <header>
+            Would you rather...
+          </header>
+          <form onSubmit={this.decideQuestion}>
+            <div>
+              <div onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</div> 
+              <div onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</div>
+            </div>
+            <button type='submit' disabled={this.state.answer === ''} >Submit</button>
+          </form>
+          <footer>
+            From the mind of {users[author].name}
+          </footer>
       </div>
     )
   }
 }
 
-function mapStateToProps ({authedUser, users, questions}, { id }){
-  const question = questions[id];  
+function mapStateToProps ({authedUser, users, questions}, { id, showAnswer }){
+  const question = questions[id]  
 
   return {
     authedUser,
     users,
-    question
+    question,
+    showAnswer
   };
 }
 
