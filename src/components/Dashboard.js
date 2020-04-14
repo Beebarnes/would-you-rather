@@ -25,7 +25,7 @@ class Dashboard extends Component {
   render () {
     const {questions, users, authedUser } = this.props
 
-    let answeredQuestions = Object.keys(users[authedUser].answers)
+    let answeredQuestions = Object.keys(users[authedUser].answers) || []
     let unansweredQuestions = Object.keys(questions).filter((question) => !answeredQuestions.includes(question))
     
     return (

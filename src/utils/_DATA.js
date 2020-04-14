@@ -158,9 +158,6 @@ export function _saveQuestion (optionOneText, optionTwoText, author) {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
       }
-
-      console.log('questions array ', questions)
-      console.log('formatted question ', formattedQuestion)
       
       users = {
         ...users,

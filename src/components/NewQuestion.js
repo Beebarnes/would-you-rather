@@ -34,11 +34,17 @@ class NewQuestion extends Component {
     this.setState( () => ({
       optionOneText: '',
       optionTwoText: '',
+      toHome: true
     }))
+
   }
 
   render() {
-    const { optionOneText, optionTwoText } = this.state
+    const { optionOneText, optionTwoText, toHome } = this.state
+
+    if (toHome) {
+      return <Redirect to='/' /> 
+    }
     
     return (
       

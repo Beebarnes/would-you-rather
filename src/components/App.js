@@ -8,6 +8,7 @@ import Login from './Login'
 import LoadingBar from 'react-redux-loading'
 import QuestionPage from './QuestionPage'
 import Nav from './Nav'
+import Leaderboard from './Leaderboard'
 
 class App extends Component {
   componentDidMount () {
@@ -28,6 +29,7 @@ class App extends Component {
                       <Route path='/all' component={QuestionPage} />
                       <Route path='/new' component={NewQuestion} />
                       <Route path='/login' component={Login} />
+                      <Route path='/leaderboard' component={Leaderboard} />
                   </div> 
                 </div>
                 }
