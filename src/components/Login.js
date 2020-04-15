@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authuser'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Nav from './Nav'
 
 
@@ -26,6 +26,8 @@ class Login extends Component {
     const { dispatch } = this.props
 
     dispatch(setAuthedUser(user))
+
+    this.props.history.push('/')
     
   }
 
@@ -34,7 +36,6 @@ class Login extends Component {
     const { user } = this.state
     
     return (
-      
       <div>
         <Nav />
         <h3 className='center'>Login</h3>
@@ -45,13 +46,13 @@ class Login extends Component {
               <option value={user.id} key={user.id}>{user.name}</option>
             ))}
           </select>
-          <button 
-            className='btn'
-            type='submit'
-            disabled={!user}>
-            >
-          Submit
-          </button>
+            <button 
+              className='btn'
+              type='submit'
+              disabled={!user}
+              >
+            Submit
+            </button>
         </form>
       </div>
     )
@@ -62,4 +63,4 @@ function mapStateToProps({ users }) {
   return { users }
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));

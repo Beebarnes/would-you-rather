@@ -19,8 +19,6 @@ export default function users (state = {}, action) {
         }
       }
     case UPDATE_USER_QUESTIONS :
-      console.log('Update user state ', state[action.question.question.author])
-      console.log('Update user action ', action)
       return {
         ...state,
         [action.question.question.author] : {

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-gravatar": "^2.6.3",
     "react-icons": "^3.9.0",
     "react-redux": "^7.2.0",
     "react-redux-loading": "^1.0.1",

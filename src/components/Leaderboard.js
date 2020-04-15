@@ -2,26 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class Leaderboard extends Component {
-  
+  state = {
+    topScores : []
+  }
 
-  
   render() {
-    
-    const { users, questions } = this.props
-
-    console.log( users )
-
-    let userArray = Object.values(users)
-    userArray.map( (user) => {
-      console.log(user.name)
-      console.log(user.answers)
-      console.log(user.questions)
-    })
 
     return (
       <div>
         <ul>
-          {Object.values(users).map( (user) => (
+          {this.props.sortedScores.map( (user) => (
             <li key={user.id} id={user.id}>
               <div>{user.name}</div>
               <div>{Object.keys(user.answers).length > 0
@@ -43,11 +33,25 @@ class Leaderboard extends Component {
   }
 }
 
-function mapStateToProps ({ questions, users, authedUser }) {
+function mapStateToProps ({ users }) {
+
+  let scores = []
+
+  Object.values(users).map( (user) => {
+    let score = Object.keys(user.answers).length + user.questions.length
+    let id = user.id
+    let userName = user.name
+    let questions = user.questions
+    let answers = user.answers
+    scores.push({id, score, userName, questions, answers})
+  } )
+
+  let sortedScores = scores.sort( (a,b) => b.score - a.score)
+
+  console.log(sortedScores)
+
   return {
-    questions,
-    users,
-    authedUser
+    sortedScores
   }
 }
 

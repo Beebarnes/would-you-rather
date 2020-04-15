@@ -5,46 +5,64 @@ import Answer from './Answer'
 
 class Dashboard extends Component {
   state = {
-    showAnswered: false,
-    previouslyAnswered: ''
+    answerPreference: this.UNANSWERED,
+    hideSubmit: true
   }
-  
-  showAnswer = (qid) => {
+
+  UNANSWERED = 'UNANSWERED'
+  ANSWERED = 'ANSWERED'
+
+  setUnansweredPreference = () => {
     this.setState({
-      showAnswered: true,
-      previouslyAnswered: qid
+      answerPreference: this.UNANSWERED
     })
   }
 
-  newQuestion = () => {
+  setAnsweredPreference = () => {
     this.setState({
-      showAnswered: false
+      answerPreference: this.ANSWERED
     })
   }
 
-  render () {
-    const {questions, users, authedUser } = this.props
+  render() {
+    const { questions, users, authedUser } = this.props
 
-    let answeredQuestions = Object.keys(users[authedUser].answers) || []
-    let unansweredQuestions = Object.keys(questions).filter((question) => !answeredQuestions.includes(question))
+    let sortedQuestions = Object.keys(questions).sort( (a,b) => questions[b].timestamp - questions[a].timestamp)
+    let answeredQuestions = Object.keys(users[authedUser].answers)
+    let unansweredQuestions = sortedQuestions.filter((question) => !answeredQuestions.includes(question))
+    
     
     return (
       <div>
-        {this.state.showAnswered
-        ? <Answer id={this.state.previouslyAnswered} newQuestion={this.newQuestion} />
-        : <Question id={unansweredQuestions[0]} showAnswer={this.showAnswer}/>
+        <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
+        <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
+        {this.state.answerPreference === this.ANSWERED 
+          ? answeredQuestions.length === 0
+            ? <p>You've answered no questions</p>
+            : answeredQuestions.map( (id) => (
+            <li key={id}>
+              <Answer id={id} hideSubmit={this.state.hideSubmit}/>
+            </li>
+            ))
+          : unansweredQuestions.length === 0
+            ? <p>You've answered all the questions.</p>
+            : unansweredQuestions.map( (id) => (
+            <li key={id}>
+              <Question id={id} hideSubmit={this.state.hideSubmit} />
+            </li>
+            ))
         }
       </div>
     )
   }
 }
 
-function mapStateToProps ({ questions, authedUser, users }) {
+function mapStateToProps ({ questions, users, authedUser }) {
   return {
-    questions,
+    users,
     authedUser,
-    users
+    questions
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToProps)(Dashboard);

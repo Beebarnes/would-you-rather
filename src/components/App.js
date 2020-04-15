@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
-import Dashboard from './Dashboard.js'
+import Dashboard from './Dashboard'
 import NewQuestion from './NewQuestion'
 import Login from './Login'
 import LoadingBar from 'react-redux-loading'
@@ -26,7 +26,7 @@ class App extends Component {
                   <Nav />
                   <div>
                       <Route path='/' exact component={Dashboard} />
-                      <Route path='/all' component={QuestionPage} />
+                      <Route path='/question/:question_id' component={QuestionPage} />
                       <Route path='/new' component={NewQuestion} />
                       <Route path='/login' component={Login} />
                       <Route path='/leaderboard' component={Leaderboard} />
@@ -43,7 +43,7 @@ class App extends Component {
 
 function mapStateToProps ({ authedUser }) {
   return {
-    loading: authedUser === null
+    loading: authedUser === null,
   }
 }
 

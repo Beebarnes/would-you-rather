@@ -1,68 +1,48 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
+import Answer from './Answer'
 
 class QuestionPage extends Component {
   state = {
-    answerPreference: this.UNANSWERED
+    showAnswered: false,
+    previouslyAnswered: ''
   }
-
-  UNANSWERED = 'UNANSWERED'
-  ANSWERED = 'ANSWERED'
-
-  setUnansweredPreference = () => {
+  
+  showAnswer = (qid) => {
     this.setState({
-      answerPreference: this.UNANSWERED
+      showAnswered: true,
+      previouslyAnswered: qid
     })
   }
 
-  setAnsweredPreference = () => {
-    this.setState({
-      answerPreference: this.ANSWERED
-    })
-  }
+  render () {
+    const {questions, users, authedUser } = this.props
 
-  showAnswer = () => {
-
-  }
-
-  render() {
-    const { questions, users, authedUser } = this.props
-    
-    let answeredQuestions = Object.keys(users[authedUser].answers)
+    let answeredQuestions = Object.keys(users[authedUser].answers) || []
     let unansweredQuestions = Object.keys(questions).filter((question) => !answeredQuestions.includes(question))
 
+    const currentQuestion = unansweredQuestions[unansweredQuestions.indexOf(this.props.match.params.question_id)]
+    
+    
     return (
       <div>
-        <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
-        <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
-        {this.state.answerPreference === this.ANSWERED 
-          ? answeredQuestions.length === 0
-            ? <p>You've answered no questions</p>
-            : answeredQuestions.map( (id) => (
-            <li key={id}>
-              <Question id={id} />
-            </li>
-            ))
-          : unansweredQuestions.length === 0
-            ? <p>You've answered all the questions.</p>
-            : unansweredQuestions.map( (id) => (
-            <li key={id}>
-              <Question id={id} showAnswer={this.showAnswer}/>
-            </li>
-            ))
+        {this.state.showAnswered
+        ? <Answer id={this.state.previouslyAnswered} />
+        : <Question id={currentQuestion} showAnswer={this.showAnswer}/>
         }
       </div>
     )
   }
 }
 
-function mapStateToProps ({ questions, users, authedUser }) {
+function mapStateToProps ({ questions, authedUser, users }) {
+  
   return {
     questions,
-    users,
-    authedUser
+    authedUser,
+    users
   }
 }
 
-export default connect(mapStateToProps)(QuestionPage);
+export default connect(mapStateToProps)(QuestionPage)

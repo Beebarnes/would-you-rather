@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { handleDecideQuestion } from '../actions/questions'
 import { handleUpdateUser } from '../actions/users'
 import { Link, withRouter } from 'react-router-dom'
+import Gravatar from 'react-gravatar'
 
 class Question extends Component {
   state = {
@@ -10,6 +11,7 @@ class Question extends Component {
   }
   
   decideQuestion = (e) => {
+    
     e.preventDefault()
 
     const { dispatch, question, authedUser } = this.props 
@@ -48,24 +50,25 @@ class Question extends Component {
       return <p>Out of fresh questions. Go make one up.</p>
     }
     
-    const { author, optionOne, optionTwo } = question
+    const { author, optionOne, optionTwo, id } = question
 
     return (
-      <div>
+      <Link to={`/question/${id}`}>
           <header>
             Would you rather...
           </header>
-          <form onSubmit={this.decideQuestion}>
+          <form >
+            <Gravatar email={users[author].avatarURL} />
             <div>
               <div onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</div> 
               <div onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</div>
             </div>
-            <button type='submit' disabled={this.state.answer === ''} >Submit</button>
+            <button onClick={this.decideQuestion} disabled={this.state.answer === ''} hidden={this.props.hideSubmit} >Submit</button>
           </form>
           <footer>
             From the mind of {users[author].name}
           </footer>
-      </div>
+      </Link>
     )
   }
 }

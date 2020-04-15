@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 class Answer extends Component {
+
+  newQuestion = (e) => {
+    this.props.history.push('/')
+  }
     
   render () {
-    console.log(this.props.users)
 
     const { optionOne, optionTwo, author } = this.props.question
     const users = this.props.users
-    console.log(users)
     const totalVotes = optionOne.votes.length + optionTwo.votes.length
     
     return (
@@ -22,7 +24,7 @@ class Answer extends Component {
           <div>{`${optionTwo.text} receives ${optionTwo.votes.length} out of ${totalVotes} total votes`}</div>
         </div>
         <footer>
-          <button onClick={this.props.newQuestion}>New Question</button>
+          <button onClick={this.newQuestion} hidden={this.props.hideSubmit}>New Question</button>
         </footer>
       </div>
     )
