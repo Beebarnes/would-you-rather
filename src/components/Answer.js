@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
+import Gravatar from 'react-gravatar'
 
 class Answer extends Component {
 
@@ -15,15 +16,23 @@ class Answer extends Component {
     const totalVotes = optionOne.votes.length + optionTwo.votes.length
     
     return (
-      <div>
-        <header>
-          <p>Question from {users[author].name}</p>
+      <div className='card'>
+        <header className='card-header'>
+          <span>Question from {users[author].name}</span>
         </header>
-        <div>
-          <div>{`${optionOne.text} receives ${optionOne.votes.length} out of ${totalVotes} total votes`}</div>
-          <div>{`${optionTwo.text} receives ${optionTwo.votes.length} out of ${totalVotes} total votes`}</div>
+        <div className='card-body'>
+          <div className='gravatar'>
+            <Gravatar email={users[author].avatarURL} />
+          </div>
+          <div className='options'>
+          <div className='option'>{`${optionOne.text} receives ${optionOne.votes.length} out of ${totalVotes} total
+                 votes or ${Math.floor(optionOne.votes.length * 100 / totalVotes)}%`}</div>
+          <div className='option'>{`${optionTwo.text} receives ${optionTwo.votes.length} out of ${totalVotes} total
+                 votes or ${Math.floor(optionTwo.votes.length * 100 / totalVotes)}%`}</div>
+          </div>
+          
         </div>
-        <footer>
+        <footer className='card-footer'>
           <button onClick={this.newQuestion} hidden={this.props.hideSubmit}>New Question</button>
         </footer>
       </div>

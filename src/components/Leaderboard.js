@@ -1,29 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Gravatar from 'react-gravatar'
 
 class Leaderboard extends Component {
-  state = {
-    topScores : []
-  }
-
+  
   render() {
+
+    console.log(this.props.sortedScores)
 
     return (
       <div>
         <ul>
           {this.props.sortedScores.map( (user) => (
-            <li key={user.id} id={user.id}>
-              <div>{user.name}</div>
-              <div>{Object.keys(user.answers).length > 0
-              ? `${Object.keys(user.answers).length} questions answered`
-              : 'No questions answered'
-              } 
+            <li className='card' key={user.id} id={user.id}>
+              <div className='card-header'>{user.name}</div>
+              <div className='card-body'>
+                <div className='gravatar'>
+                  <Gravatar email={user.avatarURL} />
+                </div>
+                <div className='options'>
+                  <div className='option'>{Object.keys(user.answers).length > 0
+                    ? `${Object.keys(user.answers).length} questions answered`
+                    : 'No questions answered'
+                  } 
+                  </div>
+                    <div className='option'>{user.questions.length} questions asked</div>
+                    <div className='option'>{Object.keys(user.answers).length + user.questions.length > 0
+                      ? `${Object.keys(user.answers).length + user.questions.length} total score` 
+                      : 'No Score Achieved'
+                  }
+                  </div>
+                </div>
+                
               </div>
-              <div>{user.questions.length} questions asked</div>
-              <div>{Object.keys(user.answers).length + user.questions.length > 0
-              ? `${Object.keys(user.answers).length + user.questions.length} total score` 
-              : 'No Score Achieved'
-              }</div>
+              
             </li>
           ))}
         </ul>
@@ -39,16 +49,11 @@ function mapStateToProps ({ users }) {
 
   Object.values(users).map( (user) => {
     let score = Object.keys(user.answers).length + user.questions.length
-    let id = user.id
-    let userName = user.name
-    let questions = user.questions
-    let answers = user.answers
-    scores.push({id, score, userName, questions, answers})
+    const {id, name, questions, answers, avatarURL } = user
+    scores.push({id, score, name, questions, answers, avatarURL})
   } )
 
   let sortedScores = scores.sort( (a,b) => b.score - a.score)
-
-  console.log(sortedScores)
 
   return {
     sortedScores

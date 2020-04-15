@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authuser'
 import { NavLink } from 'react-router-dom'
+import Gravatar from 'react-gravatar'
 
 class Nav extends Component{
 
@@ -21,30 +22,31 @@ class Nav extends Component{
     const user = users[authedUser]
     return (
       <nav className='nav'>
-        <ul>
-          <li>
-            <NavLink to='/' exact activeClassName='active'>
-              Home
+        <ul className='nav-list'>
+          <li className='nav-list-item'>
+            <NavLink to='/' exact className='nav-link' activeClassName='active'>
+              HOME
             </NavLink>
           </li>
-          <li>
-            <NavLink to='/new' activeClassName='active'>
+          <li className='nav-list-item'>
+            <NavLink to='/new' className='nav-link' activeClassName='active'>
               New Question
             </NavLink>
           </li>
-          <li>
-            <NavLink to='/leaderboard' activeClassName='active'>
+          <li className='nav-list-item'>
+            <NavLink to='/leaderboard' className='nav-link' activeClassName='active'>
               Top Scores
             </NavLink>
           </li>
         </ul>
         {!user
         ? null
-        : <ul>
-          <li>
+        : <ul className='nav-list'>
+          <Gravatar className='avatar' email={users[authedUser].avatarURL} />
+          <li className='nav-list-item'>
             {user.name}
           </li>
-          <li>
+          <li className='nav-list-item'>
             <button onClick={this.handleSubmit}>Logout</button>
           </li>
         </ul>

@@ -54,20 +54,27 @@ class Question extends Component {
 
     return (
       <Link to={`/question/${id}`}>
-          <header>
-            Would you rather...
+        <div className='card'>
+          <header className='card-header'>
+            <span>Would you rather...</span>
           </header>
-          <form >
-            <Gravatar email={users[author].avatarURL} />
-            <div>
-              <div onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</div> 
-              <div onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</div>
+          <form className='card-body'>
+            <div className='gravatar'>
+              <Gravatar email={users[author].avatarURL} />
+            </div>
+            
+            <div className='options'>
+              <div className='option'><span onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</span></div> 
+              <div className='option'>------OR------</div>
+              <div className='option'><span onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</span></div>
             </div>
             <button onClick={this.decideQuestion} disabled={this.state.answer === ''} hidden={this.props.hideSubmit} >Submit</button>
           </form>
-          <footer>
-            From the mind of {users[author].name}
+          <footer className='card-footer'>
+            <span>From the mind of {users[author].name}</span>
           </footer>
+        </div>
+          
       </Link>
     )
   }

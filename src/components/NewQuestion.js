@@ -51,7 +51,7 @@ class NewQuestion extends Component {
       <div>
         <h3 className='center'>Compose New Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
-          <textarea 
+          <input
             placeholder="Option 1"
             value={optionOneText}
             onChange={this.handleChange}
@@ -59,7 +59,7 @@ class NewQuestion extends Component {
             maxLength={280}
             name='optionOneText'
           />
-          <textarea 
+          <input 
             placeholder="Option 2"
             value={optionTwoText}
             onChange={this.handleChange}
@@ -70,8 +70,8 @@ class NewQuestion extends Component {
           <button 
             className='btn'
             type='submit'
-            disabled={optionOneText === '' || optionTwoText === '' }>
-            >
+            disabled={optionOneText === '' || optionTwoText === '' }
+          >
           Submit
           </button>
         </form>

@@ -5,22 +5,19 @@ import Answer from './Answer'
 
 class Dashboard extends Component {
   state = {
-    answerPreference: this.UNANSWERED,
-    hideSubmit: true
+    answerPreference: false,
+    hideSubmit: true,
   }
-
-  UNANSWERED = 'UNANSWERED'
-  ANSWERED = 'ANSWERED'
-
+  
   setUnansweredPreference = () => {
     this.setState({
-      answerPreference: this.UNANSWERED
+      answerPreference: false
     })
   }
 
   setAnsweredPreference = () => {
     this.setState({
-      answerPreference: this.ANSWERED
+      answerPreference: true
     })
   }
 
@@ -34,24 +31,35 @@ class Dashboard extends Component {
     
     return (
       <div>
-        <h3 className='center' onClick={this.setUnansweredPreference} >Unanswered</h3>
-        <h3 className='center' onClick={this.setAnsweredPreference} >Answered</h3>
-        {this.state.answerPreference === this.ANSWERED 
-          ? answeredQuestions.length === 0
-            ? <p>You've answered no questions</p>
-            : answeredQuestions.map( (id) => (
-            <li key={id}>
-              <Answer id={id} hideSubmit={this.state.hideSubmit}/>
-            </li>
-            ))
-          : unansweredQuestions.length === 0
-            ? <p>You've answered all the questions.</p>
-            : unansweredQuestions.map( (id) => (
-            <li key={id}>
-              <Question id={id} hideSubmit={this.state.hideSubmit} />
-            </li>
-            ))
-        }
+        <div className='header'>
+          <h3 
+            onClick={this.setUnansweredPreference} 
+            className={!this.state.answerPreference ? 'active-preference' : 'header-item'}
+          >Unanswered</h3>
+          <h3 
+            onClick={this.setAnsweredPreference} 
+            className={this.state.answerPreference ? 'active-preference': 'header-item' }
+          >Answered</h3>
+        </div>
+          <ul>
+            {this.state.answerPreference
+            ? answeredQuestions.length === 0
+              ? <p>You've answered no questions</p>
+              : answeredQuestions.map( (id) => (
+              <li key={id}>
+                <Answer id={id} hideSubmit={this.state.hideSubmit}/>
+              </li>
+              ))
+            : unansweredQuestions.length === 0
+              ? <p>You've answered all the questions.</p>
+              : unansweredQuestions.map( (id) => (
+              <li key={id}>
+                <Question id={id} hideSubmit={this.state.hideSubmit} />
+              </li>
+              ))
+            }
+          </ul>
+        
       </div>
     )
   }
