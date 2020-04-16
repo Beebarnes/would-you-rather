@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authuser'
 import { withRouter } from 'react-router-dom'
-import Nav from './Nav'
-
 
 class Login extends Component {
   state = {
