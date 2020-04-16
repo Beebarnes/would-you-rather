@@ -4,7 +4,7 @@ This application was developed for the Udacity React Nanodegree to exhibit compe
 
 ## Installing would you rather
 
-Cloning this repository means that the user needs to only `cd` in to the correct directory and run `npm install` followed by `npm start`. This will open the web page for the application.
+Cloning this repository means that the user needs to only `cd` in to the correct directory and run <code>npm install</code> followed by <code>npm start</code>. This will open the web page for the application.
 
 ## Notes on Use
 

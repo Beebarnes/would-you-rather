@@ -64,9 +64,13 @@ class Question extends Component {
             </div>
             
             <div className='options'>
-              <div className='option'><span onClick={this.setAnswer} value={optionOne.text}  id='optionOne'>{optionOne.text}</span></div> 
-              <div className='option'>------OR------</div>
-              <div className='option'><span onClick={this.setAnswer} value={optionTwo.text} id='optionTwo'>{optionTwo.text}</span></div>
+              <div className='option' >
+                <button onClick={this.setAnswer} value='optionOne'  id='optionOne'>{optionOne.text}</button>
+              </div> 
+              <div className='option or'>------OR------</div>
+              <div className='option' >
+                <button onClick={this.setAnswer} value='optionTwo' id='optionTwo'>{optionTwo.text}</button>
+              </div>
             </div>
             <button onClick={this.decideQuestion} disabled={this.state.answer === ''} hidden={this.props.hideSubmit} >Submit</button>
           </form>
@@ -81,7 +85,15 @@ class Question extends Component {
 }
 
 function mapStateToProps ({authedUser, users, questions}, { id, showAnswer }){
-  const question = questions[id]  
+  let question
+  if (questions[id]){
+    question = questions[id]  
+  } else {
+    question = false;
+  }
+
+  console.log(question)
+  
 
   return {
     authedUser,

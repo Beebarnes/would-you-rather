@@ -34,10 +34,9 @@ class Login extends Component {
   render() {
     const { users } = this.props
     const { user } = this.state
-    
+
     return (
       <div>
-        <Nav />
         <h3 className='center'>Login</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
           <select onClick={this.handleSelect}>
@@ -54,6 +53,10 @@ class Login extends Component {
             Submit
             </button>
         </form>
+        {this.props.location.pathname.length > 8
+         ? <h3>404 - Route Not Found. Please Login</h3>
+         : null
+        }
       </div>
     )
   }

@@ -11,10 +11,10 @@ class Answer extends Component {
     
   render () {
 
-    const { optionOne, optionTwo, author } = this.props.question
-    const users = this.props.users
+    const { optionOne, optionTwo, author, id } = this.props.question
+    const { users, authedUser } = this.props
     const totalVotes = optionOne.votes.length + optionTwo.votes.length
-    
+
     return (
       <div className='card'>
         <header className='card-header'>
@@ -25,10 +25,20 @@ class Answer extends Component {
             <Gravatar email={users[author].avatarURL} />
           </div>
           <div className='options'>
-          <div className='option'>{`${optionOne.text} receives ${optionOne.votes.length} out of ${totalVotes} total
-                 votes or ${Math.floor(optionOne.votes.length * 100 / totalVotes)}%`}</div>
-          <div className='option'>{`${optionTwo.text} receives ${optionTwo.votes.length} out of ${totalVotes} total
-                 votes or ${Math.floor(optionTwo.votes.length * 100 / totalVotes)}%`}</div>
+            <div className='option'>{`${optionOne.text} receives ${optionOne.votes.length} out of ${totalVotes} total
+              votes or ${Math.floor(optionOne.votes.length * 100 / totalVotes)}%`}
+              {users[authedUser].answers[id] === 'optionOne'
+              ? <div> You chose this option</div>
+              : null
+              }
+            </div>
+            <div className='option'>{`${optionTwo.text} receives ${optionTwo.votes.length} out of ${totalVotes} total
+              votes or ${Math.floor(optionTwo.votes.length * 100 / totalVotes)}%`}
+              {users[authedUser].answers[id] === 'optionTwo'
+              ? <div> You chose this option</div>
+              : null
+              }
+            </div>
           </div>
           
         </div>

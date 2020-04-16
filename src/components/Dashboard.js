@@ -25,9 +25,8 @@ class Dashboard extends Component {
     const { questions, users, authedUser } = this.props
 
     let sortedQuestions = Object.keys(questions).sort( (a,b) => questions[b].timestamp - questions[a].timestamp)
-    let answeredQuestions = Object.keys(users[authedUser].answers)
+    let answeredQuestions = Object.keys(users[authedUser].answers).sort((a,b) => questions[b].timestamp - questions[a].timestamp)
     let unansweredQuestions = sortedQuestions.filter((question) => !answeredQuestions.includes(question))
-    
     
     return (
       <div>

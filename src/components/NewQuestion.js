@@ -6,8 +6,8 @@ import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
   state = {
-    option1Text: '',
-    option2Text: '',
+    optionOneText: '',
+    optionTwoText: '',
     author: this.props.authedUser,
     toHome: false
   }
@@ -55,16 +55,14 @@ class NewQuestion extends Component {
             placeholder="Option 1"
             value={optionOneText}
             onChange={this.handleChange}
-            className='textarea'
-            maxLength={280}
+            maxLength={50}
             name='optionOneText'
           />
           <input 
             placeholder="Option 2"
             value={optionTwoText}
             onChange={this.handleChange}
-            className='textarea'
-            maxLength={280}
+            maxLength={50}
             name='optionTwoText'
           />
           <button 

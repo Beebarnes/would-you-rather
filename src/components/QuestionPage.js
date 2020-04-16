@@ -23,6 +23,8 @@ class QuestionPage extends Component {
     let unansweredQuestions = Object.keys(questions).filter((question) => !answeredQuestions.includes(question))
 
     const currentQuestion = unansweredQuestions[unansweredQuestions.indexOf(this.props.match.params.question_id)]
+
+    console.log(currentQuestion)
     
     
     return (
