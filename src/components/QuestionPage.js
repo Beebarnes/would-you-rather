@@ -24,9 +24,6 @@ class QuestionPage extends Component {
 
     const currentQuestion = unansweredQuestions[unansweredQuestions.indexOf(this.props.match.params.question_id)]
 
-    console.log(currentQuestion)
-    
-    
     return (
       <div>
         {this.state.showAnswered

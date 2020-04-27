@@ -92,9 +92,6 @@ function mapStateToProps ({authedUser, users, questions}, { id, showAnswer }){
     question = false;
   }
 
-  console.log(question)
-  
-
   return {
     authedUser,
     users,

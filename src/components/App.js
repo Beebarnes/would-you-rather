@@ -30,7 +30,6 @@ class App extends Component {
                   ? <div>
                       <Nav />
                       <Switch>
-                        <Route path='/leaderboard' component={Leaderboard} />
                         <Route path='/' component={Login} />
                       </Switch>
                     </div>   

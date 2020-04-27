@@ -20,12 +20,16 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log(this.props)
+
     const { user } = this.state
     const { dispatch } = this.props
 
     dispatch(setAuthedUser(user))
 
-    this.props.history.push('/')
+    if(this.props.location.pathname.length > 8 && this.props.location.pathname !== '/leaderboard'){
+      this.props.history.push('/')
+    }
     
   }
 
@@ -51,7 +55,7 @@ class Login extends Component {
             Submit
             </button>
         </form>
-        {this.props.location.pathname.length > 8
+        {this.props.location.pathname.length > 8 && this.props.location.pathname !== '/leaderboard'
          ? <h3>404 - Route Not Found. Please Login</h3>
          : null
         }
