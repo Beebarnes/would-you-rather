@@ -20,17 +20,19 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(this.props)
-
     const { user } = this.state
     const { dispatch } = this.props
+    let previousLocation
+
+    if (this.props.location.state) {
+      previousLocation = this.props.location.state.from.pathname
+    } else {
+      previousLocation = '/'
+    }
 
     dispatch(setAuthedUser(user))
 
-    if(this.props.location.pathname.length > 8 && this.props.location.pathname !== '/leaderboard'){
-      this.props.history.push('/')
-    }
-    
+    this.props.history.push(previousLocation)
   }
 
   render() {

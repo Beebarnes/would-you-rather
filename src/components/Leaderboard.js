@@ -6,8 +6,6 @@ class Leaderboard extends Component {
   
   render() {
 
-    console.log(this.props.sortedScores)
-
     return (
       <div>
         <ul>

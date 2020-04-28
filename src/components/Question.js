@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleDecideQuestion } from '../actions/questions'
 import { handleUpdateUser } from '../actions/users'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 
 class Question extends Component {
@@ -44,13 +44,24 @@ class Question extends Component {
 
   render () {
 
-    const { question, users } = this.props
+    const { question, users, questions } = this.props
+    let questionExists = false;
     
     if (question === null || question === undefined) {
       return <p>Out of fresh questions. Go make one up.</p>
     }
     
     const { author, optionOne, optionTwo, id } = question
+    
+    for (let question of Object.keys(questions)) {
+      if (question === this.props.question.id){
+        questionExists = true
+      }
+    }
+
+    if (!questionExists){
+      return <Redirect to='/notFound' /> 
+    }
 
     return (
       <Link to={`/question/${id}`}>
@@ -96,6 +107,7 @@ function mapStateToProps ({authedUser, users, questions}, { id, showAnswer }){
     authedUser,
     users,
     question,
+    questions,
     showAnswer
   };
 }

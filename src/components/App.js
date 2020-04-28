@@ -10,6 +10,7 @@ import QuestionPage from './QuestionPage'
 import Nav from './Nav'
 import Leaderboard from './Leaderboard'
 import NotFound from './NotFound.js'
+import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
   
@@ -26,24 +27,17 @@ class App extends Component {
           <div className='container'>
             {this.props.loadingBar.default
               ? null
-              : this.props.authed
-                  ? <div>
-                      <Nav />
-                      <Switch>
-                        <Route path='/' component={Login} />
-                      </Switch>
-                    </div>   
-                  : <div>
-                      <Nav />
-                      <Switch>
-                          <Route path='/' exact component={Dashboard} />
-                          <Route path='/question/:question_id' exact component={QuestionPage} />
-                          <Route path='/add' component={NewQuestion} />
-                          <Route path='/login' component={Login} />
-                          <Route path='/leaderboard' component={Leaderboard} />
-                          <Route component={NotFound} />
-                      </Switch> 
-                    </div>
+              : <div>
+                  <Nav />
+                  <Switch>
+                      <Route path='/login' component={Login} />
+                      <PrivateRoute path='/' exact component={Dashboard} />
+                      <PrivateRoute path='/question/:question_id' exact component={QuestionPage} />
+                      <PrivateRoute path='/add' component={NewQuestion} />
+                      <PrivateRoute path='/leaderboard' component={Leaderboard} />
+                      <Route component={NotFound} />
+                  </Switch> 
+                </div>
             }     
           </div>
         </Fragment>

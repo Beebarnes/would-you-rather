@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Login from './Login'
+import { Link } from 'react-router-dom'
 
 
 
@@ -9,8 +9,8 @@ class NotFound extends Component {
   render() {
     return (
       <div>
-        <Login />
-        <h3>Page Not Found. Login to continue</h3>
+        <h3>Route not Found.</h3>
+        <Link to='/'>Click here to return home.</Link>
       </div>
     )
   }
